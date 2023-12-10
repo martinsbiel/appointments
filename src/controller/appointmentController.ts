@@ -8,24 +8,24 @@ import {User} from '../entity/User';
 import Logger from '../../config/logger';
 
 // Database
-import {AppDataSource} from '../data-source';
+import handleGetRepository from '../data-source';
 
 export async function createAppointment(req: Request, res: Response){
     try {
-        const user = await AppDataSource.getRepository(User).findOneBy({
+        const user = await handleGetRepository(User).findOneBy({
             id: res.locals.jwtPayload.id
         });
 
         const data = req.body;
 
-        const appointment = await AppDataSource.getRepository(Appointment).create({
+        const appointment = handleGetRepository(Appointment).create({
             title: data.title,
             content: data.content,
             target_date: data.target_date,
             user
         });
 
-        const results = await AppDataSource.getRepository(Appointment).save(appointment);
+        const results = await handleGetRepository(Appointment).save(appointment);
 
         return res.status(201).json(results);
     }catch(e: any){
@@ -39,7 +39,7 @@ export async function findAppointmentById(req: Request, res: Response){
     try {
         const id = Number(req.params.id);
 
-        const appointment = await AppDataSource.getRepository(Appointment).findOne({
+        const appointment = await handleGetRepository(Appointment).findOne({
             where: {
                 id
             },
@@ -68,7 +68,7 @@ export async function getAllAppointmentsByUser(req: Request, res: Response){
     try {
         const id = res.locals.jwtPayload.id;
 
-        const appointments = await AppDataSource.getRepository(Appointment).find({
+        const appointments = await handleGetRepository(Appointment).find({
             where: {
                 user: {
                     id
@@ -95,7 +95,7 @@ export async function removeAppointment(req: Request, res: Response){
     try {
         const id = Number(req.params.id);
 
-        const appointment = await AppDataSource.getRepository(Appointment).findOne({
+        const appointment = await handleGetRepository(Appointment).findOne({
             where: {
                 id
             },
@@ -112,7 +112,7 @@ export async function removeAppointment(req: Request, res: Response){
             return res.status(401).json({error: 'You\'re not authorized to see this.'});
         }
 
-        await AppDataSource.getRepository(Appointment).softDelete(id);
+        await handleGetRepository(Appointment).softDelete(id);
 
         return res.status(200).json({msg: 'Appointment removed successfully!'});
     }catch(e: any){
@@ -127,7 +127,7 @@ export async function updateAppointment(req: Request, res: Response){
         const id = Number(req.params.id);
         const data = req.body;
 
-        const appointment = await AppDataSource.getRepository(Appointment).findOne({
+        const appointment = await handleGetRepository(Appointment).findOne({
             where: {
                 id
             },
@@ -144,14 +144,14 @@ export async function updateAppointment(req: Request, res: Response){
             return res.status(401).json({error: 'You\'re not authorized to see this.'});
         }
 
-        AppDataSource.getRepository(Appointment).merge(appointment, {
+        handleGetRepository(Appointment).merge(appointment, {
             title: data.title,
             content: data.content,
             target_date: data.target_date,
             is_done: data.is_done
         });
 
-        const results = await AppDataSource.getRepository(Appointment).save(appointment);
+        const results = await handleGetRepository(Appointment).save(appointment);
 
         return res.status(200).json(results);
     }catch(e: any){

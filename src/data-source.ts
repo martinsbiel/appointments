@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import {DataSource} from 'typeorm';
+import {DataSource, EntityTarget, Repository} from 'typeorm';
 import {Appointment} from './entity/Appointment';
 import {User} from './entity/User';
 
@@ -16,3 +16,20 @@ export const AppDataSource = new DataSource({
     migrations: [],
     subscribers: [],
 });
+
+export const TestDataSource = new DataSource({
+    type: 'sqlite',
+    database: ':memory:',
+    synchronize: true,
+    logging: false,
+    entities: [User, Appointment],
+});
+
+const handleGetRepository = <T>(entity: EntityTarget<T>): Repository<T> => {
+    const environment = process.env.NODE_ENV || 'development';
+    return environment === 'test'
+        ? TestDataSource.manager.getRepository(entity)
+        : AppDataSource.manager.getRepository(entity);
+};
+
+export default handleGetRepository;

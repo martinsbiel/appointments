@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn} from 'typeorm';
 import {User} from './User';
+import {faker} from '@faker-js/faker';
 
 @Entity()
 export class Appointment {
@@ -41,4 +42,15 @@ export class Appointment {
 
     @DeleteDateColumn()
     deleted_at: Date;
+
+    public static async mockTestAppointment(user: User): Promise<Appointment> {
+        const appointment = new Appointment();
+
+        appointment.title = faker.lorem.sentence(5);
+        appointment.content = faker.lorem.paragraph();
+        appointment.user = user;
+        appointment.target_date = faker.date.soon({days: 1});
+
+        return appointment;
+    }
 }

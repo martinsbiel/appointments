@@ -41,7 +41,8 @@ const Logger = winston.createLogger({
     level: level(),
     levels,
     format,
-    transports
+    transports,
+    silent: process.env.NODE_ENV === 'test' ? true : false
 });
 
 export default Logger;

@@ -1,5 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany} from 'typeorm';
 import {Appointment} from './Appointment';
+import {faker} from '@faker-js/faker';
+import bcrypt from 'bcrypt';
 
 @Entity()
 export class User {
@@ -42,4 +44,15 @@ export class User {
 
     @DeleteDateColumn()
     deleted_at: Date;
+
+    public static async mockTestUser(role: number): Promise<User> {
+        const user = new User();
+
+        user.email = faker.internet.email();
+        user.name = faker.person.fullName();
+        user.password = await bcrypt.hash('secret', 10);
+        user.role = role;
+
+        return user;
+    }
 }

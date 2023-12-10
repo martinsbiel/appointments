@@ -9,7 +9,7 @@ import {User} from '../entity/User';
 import Logger from '../../config/logger';
 
 // Database
-import {AppDataSource} from '../data-source';
+import handleGetRepository from '../data-source';
 
 export async function loginUser(req: Request, res: Response){
     try {
@@ -18,7 +18,7 @@ export async function loginUser(req: Request, res: Response){
             password
         } = req.body;
     
-        const user = await AppDataSource.getRepository(User).findOneBy({
+        const user = await handleGetRepository(User).findOneBy({
             email
         });
     

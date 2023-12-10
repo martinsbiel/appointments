@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watchAll --runInBand --verbose",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
   },
   "keywords": [],
@@ -26,6 +26,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
     "@types/bcrypt": "^5.0.0",
     "@types/config": "^3.3.0",
     "@types/cron": "^2.0.0",

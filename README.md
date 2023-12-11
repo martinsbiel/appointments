@@ -1,5 +1,5 @@
 # Appointment management API
-This project is an open-source appointment manager RESTful API built with [NodeJS](https://nodejs.org/en/), [ExpressJS](https://expressjs.com/), [JWT](https://github.com/auth0/node-jsonwebtoken), [TypeORM](https://typeorm.io/) and [Typescript](https://www.typescriptlang.org/). It does have a complete authentication system that includes a role middleware, all data that goes through all endpoints are validated using [express-validator](https://express-validator.github.io/docs). 24 hours (also known as one day) before the scheduled date the user will receive an automated email with details about their appointment, the date check is done by a Cron Job that runs every 10 minutes. Feel free to contribute and suggest changes. The full documentation can be found below. :)
+This project is an open-source appointment manager RESTful API built with [NodeJS](https://nodejs.org/en/), [ExpressJS](https://expressjs.com/), [JWT](https://github.com/auth0/node-jsonwebtoken), [TypeORM](https://typeorm.io/) and [Typescript](https://www.typescriptlang.org/). It does have a complete authentication system that includes a role middleware, all data that goes through all endpoints are validated using [express-validator](https://express-validator.github.io/docs). 24 hours (also known as one day) before the scheduled date the user will receive an automated email with details about their appointment, the date check is done by a Cron Job that runs every 10 minutes. All the API endpoints are tested with [Jest](https://jestjs.io/), ensuring that unexpected behavior won't happen after adding or improving features. Feel free to contribute and suggest changes. The full documentation can be found below. :)
 
 ## Setting up the project
 The project was built using Typescript `v4.9.4` and NodeJS `v18.15.0`. There are two ways to setup this project, you can see both below:
@@ -14,6 +14,9 @@ The project was built using Typescript `v4.9.4` and NodeJS `v18.15.0`. There are
 - Clone this repository
 - Duplicate the `.env.example` file, rename it to `.env`, and enter your email server credentials
 - Run `docker-compose up`
+
+### Running tests
+All API endpoints are tested, you can run tests by simply running `npm run test`
 
 ## Authentication route
 
@@ -241,9 +244,6 @@ Return example:
     "msg": "Appointment removed successfully!"
 }
 ```
-
-# Looking forward
-I've plans to implement tests to all API endpoints.
 
 # License
 This software is available under the [MIT License](https://opensource.org/license/mit/).

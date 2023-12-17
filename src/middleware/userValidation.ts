@@ -1,4 +1,4 @@
-import {body, CustomValidator} from 'express-validator';
+import {body, CustomValidator, ValidationChain} from 'express-validator';
 import {AppDataSource} from '../data-source';
 import {User} from '../entity/User';
 
@@ -14,7 +14,7 @@ const isValidEmail: CustomValidator = async value => {
     });
 };
 
-export const userCreateValidation = () => {
+export const userCreateValidation = (): ValidationChain[] => {
     return [
         body('name').isString().withMessage('Name is required.'),
         body('email').isString().withMessage('Email is required.').isEmail().withMessage('Enter a valid email address.').custom(isValidEmail),
@@ -22,7 +22,7 @@ export const userCreateValidation = () => {
     ];
 }
 
-export const userUpdateValidation = () => {
+export const userUpdateValidation = (): ValidationChain[] => {
     return [
         body('name').isString().withMessage('Name is required.'),
         body('email').isString().withMessage('Email is required.').isEmail().withMessage('Enter a valid email address.'),
@@ -30,7 +30,7 @@ export const userUpdateValidation = () => {
     ];
 }
 
-export const userLoginValidation = () => {
+export const userLoginValidation = (): ValidationChain[] => {
     return [
         body('email').isString().withMessage('Email is required.').isEmail().withMessage('Enter a valid email address.'),
         body('password').isString().withMessage('Password is required.')

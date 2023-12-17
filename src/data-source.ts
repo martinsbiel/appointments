@@ -3,7 +3,7 @@ import {DataSource, EntityTarget, Repository} from 'typeorm';
 import {Appointment} from './entity/Appointment';
 import {User} from './entity/User';
 
-export const AppDataSource = new DataSource({
+export const AppDataSource: DataSource = new DataSource({
     type: 'mysql',
     host: process.env.DB_HOST,
     port: 3306,
@@ -17,7 +17,7 @@ export const AppDataSource = new DataSource({
     subscribers: [],
 });
 
-export const TestDataSource = new DataSource({
+export const TestDataSource: DataSource = new DataSource({
     type: 'sqlite',
     database: ':memory:',
     synchronize: true,

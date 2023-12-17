@@ -5,7 +5,7 @@ const stream: StreamOptions = {
     write: (message) => Logger.http(message)
 };
 
-const skip = () => {
+const skip = (): boolean => {
     const env = process.env.APP_ENV || 'development';
 
     return env !== 'development';

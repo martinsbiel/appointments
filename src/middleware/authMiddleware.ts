@@ -1,18 +1,18 @@
 import {Request, Response, NextFunction} from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, {JwtPayload} from 'jsonwebtoken';
 import Logger from '../../config/logger';
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = (req: Request, res: Response, next: NextFunction): void | Response => {
     try {
-        const authToken = req.headers['authorization'];
+        const authToken: string = req.headers['authorization'];
 
         if(!authToken){
             return res.status(401).json({error: 'You\'re not logged in.'});
         }
 
-        const bearer = authToken.split(' ');
-        const token = bearer[1];
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const bearer: string[] = authToken.split(' ');
+        const token: string = bearer[1];
+        const decoded: string | JwtPayload = jwt.verify(token, process.env.SECRET_KEY);
         
         res.locals.jwtPayload = decoded;
 

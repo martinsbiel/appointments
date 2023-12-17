@@ -46,7 +46,7 @@ export class User {
     deleted_at: Date;
 
     public static async mockTestUser(role: number): Promise<User> {
-        const user = new User();
+        const user: User = new User();
 
         user.email = faker.internet.email();
         user.name = faker.person.fullName();

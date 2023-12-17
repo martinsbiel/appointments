@@ -44,7 +44,7 @@ export class Appointment {
     deleted_at: Date;
 
     public static async mockTestAppointment(user: User): Promise<Appointment> {
-        const appointment = new Appointment();
+        const appointment: Appointment = new Appointment();
 
         appointment.title = faker.lorem.sentence(5);
         appointment.content = faker.lorem.paragraph();

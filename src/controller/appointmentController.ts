@@ -10,22 +10,22 @@ import Logger from '../../config/logger';
 // Database
 import handleGetRepository from '../data-source';
 
-export async function createAppointment(req: Request, res: Response){
+export async function createAppointment(req: Request, res: Response): Promise<Response> {
     try {
-        const user = await handleGetRepository(User).findOneBy({
+        const user: User = await handleGetRepository(User).findOneBy({
             id: res.locals.jwtPayload.id
         });
 
         const data = req.body;
 
-        const appointment = handleGetRepository(Appointment).create({
+        const appointment: Appointment = handleGetRepository(Appointment).create({
             title: data.title,
             content: data.content,
             target_date: data.target_date,
             user
         });
 
-        const results = await handleGetRepository(Appointment).save(appointment);
+        const results: Appointment = await handleGetRepository(Appointment).save(appointment);
 
         return res.status(201).json(results);
     }catch(e: any){
@@ -35,11 +35,11 @@ export async function createAppointment(req: Request, res: Response){
     }
 }
 
-export async function findAppointmentById(req: Request, res: Response){
+export async function findAppointmentById(req: Request, res: Response): Promise<Response> {
     try {
-        const id = Number(req.params.id);
+        const id: number = Number(req.params.id);
 
-        const appointment = await handleGetRepository(Appointment).findOne({
+        const appointment: Appointment = await handleGetRepository(Appointment).findOne({
             where: {
                 id
             },
@@ -64,11 +64,11 @@ export async function findAppointmentById(req: Request, res: Response){
     }
 }
 
-export async function getAllAppointmentsByUser(req: Request, res: Response){
+export async function getAllAppointmentsByUser(req: Request, res: Response): Promise<Response> {
     try {
-        const id = res.locals.jwtPayload.id;
+        const id: number = res.locals.jwtPayload.id;
 
-        const appointments = await handleGetRepository(Appointment).find({
+        const appointments: Appointment[] = await handleGetRepository(Appointment).find({
             where: {
                 user: {
                     id
@@ -91,11 +91,11 @@ export async function getAllAppointmentsByUser(req: Request, res: Response){
     }
 }
 
-export async function removeAppointment(req: Request, res: Response){
+export async function removeAppointment(req: Request, res: Response): Promise<Response> {
     try {
-        const id = Number(req.params.id);
+        const id: number = Number(req.params.id);
 
-        const appointment = await handleGetRepository(Appointment).findOne({
+        const appointment: Appointment = await handleGetRepository(Appointment).findOne({
             where: {
                 id
             },
@@ -122,12 +122,12 @@ export async function removeAppointment(req: Request, res: Response){
     }
 }
 
-export async function updateAppointment(req: Request, res: Response){
+export async function updateAppointment(req: Request, res: Response): Promise<Response> {
     try {
-        const id = Number(req.params.id);
+        const id: number = Number(req.params.id);
         const data = req.body;
 
-        const appointment = await handleGetRepository(Appointment).findOne({
+        const appointment: Appointment = await handleGetRepository(Appointment).findOne({
             where: {
                 id
             },
@@ -151,7 +151,7 @@ export async function updateAppointment(req: Request, res: Response){
             is_done: data.is_done
         });
 
-        const results = await handleGetRepository(Appointment).save(appointment);
+        const results: Appointment = await handleGetRepository(Appointment).save(appointment);
 
         return res.status(200).json(results);
     }catch(e: any){

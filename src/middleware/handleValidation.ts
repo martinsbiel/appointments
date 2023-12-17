@@ -1,9 +1,8 @@
 import {Request, Response, NextFunction} from 'express';
-import {validationResult} from 'express-validator';
-import {readSync} from 'fs';
+import {Result, ValidationError, validationResult} from 'express-validator';
 
-export const validate = (req: Request, res: Response, next: NextFunction) => {
-    const errors = validationResult(req);
+export const validate = (req: Request, res: Response, next: NextFunction): void | Response => {
+    const errors: Result<ValidationError> = validationResult(req);
 
     if(errors.isEmpty()){
         return next();

@@ -4,9 +4,9 @@ import {AppDataSource} from './data-source';
 import {Appointment} from './entity/Appointment';
 import nodemailer from 'nodemailer';
 
-const job = new CronJob('* */10 * * * *', async () => {
+const job: CronJob = new CronJob('* */10 * * * *', async () => {
 	try {
-        const appointments = await AppDataSource.getRepository(Appointment).find({
+        const appointments: Appointment[] = await AppDataSource.getRepository(Appointment).find({
             where: {
                 was_notified: false
             },

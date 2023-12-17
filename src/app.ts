@@ -1,8 +1,8 @@
 require('dotenv').config();
-import express from 'express';
+import express, {Express} from 'express';
 import 'reflect-metadata';
 
-const app = express();
+const app: Express = express();
 
 // JSON middleware
 app.use(express.json());

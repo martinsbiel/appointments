@@ -10,21 +10,21 @@ import Logger from '../../config/logger';
 // Database
 import handleGetRepository from '../data-source';
 
-export async function createUser(req: Request, res: Response){
+export async function createUser(req: Request, res: Response): Promise<Response> {
     try {
         const data = req.body;
 
-        const count = await handleGetRepository(User).count();
+        const count: number = await handleGetRepository(User).count();
 
         // the first registered user will always be an admin
-        const user = handleGetRepository(User).create({
+        const user: User = handleGetRepository(User).create({
             name: data.name,
             email: data.email,
             password: await bcrypt.hash(data.password, 10),
             role: count === 0 ? 1 : 2
         });
 
-        const results = await handleGetRepository(User).save(user);
+        const results: User = await handleGetRepository(User).save(user);
 
         return res.status(201).json(results);
     }catch(e: any){
@@ -34,11 +34,11 @@ export async function createUser(req: Request, res: Response){
     }
 }
 
-export async function findUserById(req: Request, res: Response){
+export async function findUserById(req: Request, res: Response): Promise<Response> {
     try {
-        const id = Number(req.params.id);
+        const id: number = Number(req.params.id);
 
-        const user = await handleGetRepository(User).findOne({
+        const user: User = await handleGetRepository(User).findOne({
             where: {
                 id
             },
@@ -63,15 +63,15 @@ export async function findUserById(req: Request, res: Response){
     }
 }
 
-export async function getAllUsers(req: Request, res: Response){
+export async function getAllUsers(req: Request, res: Response): Promise<Response> {
     try {
-        const users = await handleGetRepository(User).find({
+        const users: User[] = await handleGetRepository(User).find({
             relations: {
                 appointments: true
             },
         });
 
-        const count = await handleGetRepository(User).count();
+        const count: number = await handleGetRepository(User).count();
 
         if(count === 0){
             return res.status(404).json({error: 'No users found.'});
@@ -85,11 +85,11 @@ export async function getAllUsers(req: Request, res: Response){
     }
 }
 
-export async function removeUser(req: Request, res: Response){
+export async function removeUser(req: Request, res: Response): Promise<Response> {
     try {
-        const id = Number(req.params.id);
+        const id: number = Number(req.params.id);
 
-        const user = await handleGetRepository(User).findOneBy({
+        const user: User = await handleGetRepository(User).findOneBy({
             id,
         });
 
@@ -111,12 +111,12 @@ export async function removeUser(req: Request, res: Response){
     }
 }
 
-export async function updateUser(req: Request, res: Response){
+export async function updateUser(req: Request, res: Response): Promise<Response> {
     try {
-        const id = Number(req.params.id);
+        const id: number = Number(req.params.id);
         const data = req.body;
 
-        const user = await handleGetRepository(User).findOneBy({
+        const user: User = await handleGetRepository(User).findOneBy({
             id,
         });
 
@@ -133,7 +133,7 @@ export async function updateUser(req: Request, res: Response){
             email: data.email,
             password: await bcrypt.hash(data.password, 10)
         });
-        const results = await handleGetRepository(User).save(user);
+        const results: User = await handleGetRepository(User).save(user);
 
         return res.status(200).json(results);
     }catch(e: any){

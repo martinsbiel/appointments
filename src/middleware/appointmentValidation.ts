@@ -1,6 +1,6 @@
-import {body} from 'express-validator';
+import {ValidationChain, body} from 'express-validator';
 
-export const appointmentCreateValidation = () => {
+export const appointmentCreateValidation = (): ValidationChain[] => {
     return [
         body('title').isString().withMessage('Title is required.'),
         body('content').isString().withMessage('Description is required.'),
@@ -8,7 +8,7 @@ export const appointmentCreateValidation = () => {
     ];
 }
 
-export const appointmentUpdateValidation = () => {
+export const appointmentUpdateValidation = (): ValidationChain[] => {
     return [
         body('title').isString().withMessage('Title is required.'),
         body('content').isString().withMessage('Description is required.'),

@@ -10,7 +10,7 @@ import {validate} from './middleware/handleValidation';
 import {userCreateValidation, userLoginValidation, userUpdateValidation} from './middleware/userValidation';
 import {appointmentCreateValidation, appointmentUpdateValidation} from './middleware/appointmentValidation';
 
-const router = Router();
+const router: Router = Router();
 
 export default router.get('/test', (req: Request, res: Response) => {
     res.status(200).send('API working!');
